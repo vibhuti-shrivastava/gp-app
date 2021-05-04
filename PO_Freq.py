@@ -9,9 +9,9 @@ import json
 #INTRODUCTION
 ##st.title("Supply Chain Analytics")
 ##st.markdown("One stop solution to Supply Chain Decision Making")
-##from PIL import Image
-##image = Image.open(r'C:\Users\sd\Desktop\banner.png')
-##st.image(image, use_column_width=True)
+from PIL import Image
+image = Image.open(r'banner.png')
+st.image(image, use_column_width=True)
 #FILE UPLOAD
 st.sidebar.subheader('What would you like work with today?')
 todo = st.sidebar.selectbox('To do:', ('Inbound Logistics', 'Inhouse Preparation', 'Outbound Logistics', 'Fulfillment', 'Sales'))
