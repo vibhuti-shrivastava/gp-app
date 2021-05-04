@@ -390,7 +390,7 @@ if todo == 'Inbound Logistics':
                 df_state_count = pd.DataFrame(df_statecount, columns= ['PO Number', 'State'])
                 st.markdown(" ")
                 st.markdown(" ")
-                india_states = json.load(open(r"C:\Users\sd\Desktop\states_india.geojson"))
+                india_states = json.load(open(r"states_india.geojson"))
                 #st.dataframe(df_state_count)
                 state_id_map = {}
                 for feature in india_states["features"]:
@@ -494,7 +494,7 @@ if todo == 'Outbound Logistics':
                     df_state_count = pd.DataFrame(df_statecount, columns= ['Order No', 'State'])
                     st.markdown(" ")
                     st.markdown(" ")
-                    india_states = json.load(open(r"C:\Users\sd\Desktop\states_india.geojson"))
+                    india_states = json.load(open(r"states_india.geojson"))
                     #st.dataframe(india_states)
                     state_id_map = {}
                     for feature in india_states["features"]:
@@ -531,7 +531,7 @@ if todo == 'Outbound Logistics':
                     df_country_count = pd.DataFrame(df_countrycount, columns= ['Order No', 'Country'])
                     st.markdown(" ")
                     st.markdown(" ")
-                    country = json.load(open(r"C:\Users\sd\Desktop\world.geojson"))
+                    country = json.load(open(r"world.geojson"))
                     #st.dataframe(india_states)
                     world_id_map = {}
                     for feature in country["features"]:
