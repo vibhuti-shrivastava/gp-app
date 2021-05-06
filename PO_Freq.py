@@ -722,7 +722,7 @@ if todo == 'Sales':
         st.markdown(" ")
         st.markdown(" ")
         st.markdown("Sales analysis")
-        fig = px.bar(df_GSV_sum, x='BRAND', y=' GSV Value ')
+        fig = px.bar(df_GSV_sum, x='BRAND', y=' GSV Value ')
         fig.update_layout(xaxis_type = 'category')
         st.plotly_chart(fig)
         agree = st.checkbox('Show data')
