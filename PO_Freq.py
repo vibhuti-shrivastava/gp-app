@@ -707,31 +707,18 @@ if todo == 'Sales':
         agree = st.checkbox('Show dataframe')
         if agree:
             st.dataframe(df_shipdate_count)
-
-        df_stitched = df.loc[df['DIVISION'] == 'Stitched']
-        df_brand = df_stitched.groupby(['BRAND'],as_index=False).sum()
-        df_brand_sum = pd.DataFrame(df_brand, columns= ['BRAND',' GSV Value '])
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown("Sales analysis")
-        fig = px.bar(df_brand_sum, x='BRAND', y='Order Qty 1')
-        fig.update_layout(xaxis_type = 'category')
-        st.plotly_chart(fig)
-        agree = st.checkbox('Show data')
-        if agree:
-            st.dataframe(df_shipdate_count)
             
-    if uploaded_file:
-        data = pd.read_excel(uploaded_file)
-        df = pd.DataFrame(data, columns= ['Channel', 'BUSINESS', 'BRAND', 'Order Qty 1', ' GSV Value ','DIVISION'])
-        #st.markdown("Say hello to your database")
-        #st.dataframe(df)
-        if st.button('Preview Data'):
-            st.dataframe(df)
+##    if uploaded_file:
+##        data = pd.read_excel(uploaded_file)
+##        df = pd.DataFrame(data, columns= ['Channel', 'BUSINESS', 'BRAND', 'Order Qty 1', ' GSV Value ','DIVISION'])
+##        #st.markdown("Say hello to your database")
+##        #st.dataframe(df)
+##        if st.button('Preview Data'):
+##            st.dataframe(df)
         st.cache(persist=True)
         df_GSV = df.loc[df['DIVISION'] == 'Stitched']
         df_GSVsum = df_GSV.groupby(['BRAND'],as_index=False).sum()
-        df_GSV_sum = pd.DataFrame(df_GSVsum, columns= ['BRAND','\xa0GSV Value '])
+        df_GSV_sum = pd.DataFrame(df_GSVsum, columns= ['BRAND',' GSV Value '])
         st.markdown(" ")
         st.markdown(" ")
         st.markdown("Sales analysis")
