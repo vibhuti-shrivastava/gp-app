@@ -731,7 +731,7 @@ if todo == 'Sales':
         st.cache(persist=True)
         df_GSV = df.loc[df['DIVISION'] == 'Stitched']
         df_GSVsum = df_GSV.groupby(['BRAND'],as_index=False).sum()
-        df_GSV_sum = pd.DataFrame(df_GSVsum, columns= ['BRAND',' GSV Value '])
+        df_GSV_sum = pd.DataFrame(df_GSVsum, columns= ['BRAND','\xa0GSV Value '])
         st.markdown(" ")
         st.markdown(" ")
         st.markdown("Sales analysis")
