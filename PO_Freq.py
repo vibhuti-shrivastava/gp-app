@@ -689,7 +689,7 @@ if todo == 'Sales':
     uploaded_file = st.file_uploader("Choose a XLSX file", type="xlsx")
     if uploaded_file:
         data = pd.read_excel(uploaded_file)
-        df = pd.DataFrame(data, columns= ['Channel', 'BUSINESS', 'BRAND', 'Order Qty 1', ' GSV Value ','DIVISION'])
+        df = pd.DataFrame(data, columns= ['Channel', 'BUSINESS', 'BRAND', 'Order Qty ', ' GSV Value ','DIVISION', 'Price Point', 'PRODUCT'])
         #st.markdown("Say hello to your database")
         #st.dataframe(df)
         if st.button('Preview Dataset'):
@@ -697,11 +697,11 @@ if todo == 'Sales':
         st.cache(persist=True)
         df_channel = df.loc[df['DIVISION'] == 'Stitched']
         df_shipdatecount = df_channel.groupby(['BRAND'],as_index=False).count()
-        df_shipdate_count = pd.DataFrame(df_shipdatecount, columns= ['BRAND','Order Qty 1'])
+        df_shipdate_count = pd.DataFrame(df_shipdatecount, columns= ['BRAND','Order Qty '])
         st.markdown(" ")
         st.markdown(" ")
         st.markdown("Sales analysis")
-        fig = px.bar(df_shipdate_count, x='BRAND', y='Order Qty 1')
+        fig = px.bar(df_shipdate_count, x='BRAND', y='Order Qty ')
         fig.update_layout(xaxis_type = 'category')
         st.plotly_chart(fig)
         agree = st.checkbox('Show dataframe')
@@ -728,3 +728,39 @@ if todo == 'Sales':
         agree = st.checkbox('Show data')
         if agree:
             st.dataframe(df_GSV_sum)
+
+        df_apparel = df.loc[df['BUSINESS'] == 'Apparels']
+        df_ordercount = df_apparel.groupby('DIVISION',as_index=False).sum()
+        st.markdown(" ")
+        st.markdown(" ")
+        st.markdown("Division Distribution")
+        fig = px.pie(df_ordercount, values=df_ordercount[' GSV Value '], names=df_ordercount['DIVISION'], title='Division')
+        st.plotly_chart(fig)
+
+        st.cache(persist=True)
+        df_channel = df.loc[df['BUSINESS'] == 'Apparels']
+        df_price = df_channel.groupby(['Price Point'],as_index=False).count()
+        df_price_count = pd.DataFrame(df_price, columns= ['Price Point','Order Qty '])
+        st.markdown(" ")
+        st.markdown(" ")
+        st.markdown("Price point analysis")
+        fig = px.bar(df_price_count, x='Price Point', y='Order Qty ')
+        fig.update_layout(xaxis_type = 'category')
+        st.plotly_chart(fig)
+##        agree = st.checkbox('Show dataframe')
+##        if agree:
+##            st.dataframe(df_price_count)
+
+        st.cache(persist=True)
+        df_product = df.loc[df['DIVISION'] == 'Stitched']
+        df_productcount = df_GSV.groupby(['PRODUCT'],as_index=False).count()
+        #df_product_count = pd.DataFrame(df_productcount, columns= ['PRODUCT', 'Order Qty '])
+        st.markdown(" ")
+        st.markdown(" ")
+        st.markdown("Sales analysis")
+        fig = px.pie(df_productcount, values=df_productcount['Order Qty '], names=df_productcount['PRODUCT'], title='Products')
+        fig.update_layout(xaxis_type = 'category')
+        st.plotly_chart(fig)
+        agree = st.checkbox('Show')
+        if agree:
+            st.dataframe(df_productcount)
