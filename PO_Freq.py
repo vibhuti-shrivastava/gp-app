@@ -14,7 +14,7 @@ image = Image.open(r'banner.png')
 st.image(image, use_column_width=True)
 #FILE UPLOAD
 st.sidebar.subheader('What would you like work with today?')
-todo = st.sidebar.selectbox('To do:', ('Inbound Logistics', 'Inhouse Preparation', 'Outbound Logistics', 'Fulfillment', 'Sales'))
+todo = st.sidebar.selectbox('To do:', ('Inbound Logistics', 'Inhouse Preparation', 'Outbound Logistics', 'Fulfillment', 'Sales', 'Article sheet'))
 if todo == 'Inbound Logistics':
     st.sidebar.subheader('Inbound Logistics')
     inbound = st.sidebar.selectbox('To do:', ('Lead Time', 'Purchase Order'))
@@ -38,16 +38,6 @@ if todo == 'Inbound Logistics':
             if basis == 'Purchase Frequency':
                 st.sidebar.subheader('Select for Purchase Frequency')
                 criteria = st.sidebar.selectbox('Criteria', ('Category', 'Vendor', 'Volume'))
-##                if criteria == 'Date':
-##                    #PO Frequency by date
-##                    df_date = df.groupby(['Doc Date'])
-##                    df_datecount = df.groupby(['Doc Date']).count()
-##                    df_date_count = pd.DataFrame(df_datecount, columns= ['PO Number'])
-##                    st.markdown(" ")
-##                    st.markdown(" ")
-##                    st.markdown("Date wise analysis of the purchase frequency")
-##                    st.line_chart(df_date_count)
-##                    st.dataframe(df_date_count)
                 if criteria == 'Category':
                     #PO Frequency by category
                     df_category = df.groupby(['Category'])
@@ -71,15 +61,6 @@ if todo == 'Inbound Logistics':
                         st.markdown(" ")
                         st.markdown("Vendor wise analysis of the purchase frequency for the Stitched Apparel Category")
                         st.bar_chart(df_SA_vname_count)
-##                        stitched_PO = df_SA_vname_count['PO Number'].values.tolist()
-##                        vendorname = df_SA_vname_count['Vendor Name'].values.tolist()
-##                        l = []
-##                        for i in stitched_PO:
-##                            if i >= 60:
-##                                index = stitched_PO.index(i)
-##                                a = vendorname(index)
-##                                l.append(a)
-##                                print [l]
                         st.dataframe(df_SA_vname_count)
                     elif category == 'Jewelry':
                         df_jew = df.loc[df['Category'] == 'Jewelry']
@@ -122,12 +103,6 @@ if todo == 'Inbound Logistics':
                         st.bar_chart(df_BF_vname_count)
                         st.dataframe(df_BF_vname_count)
                 elif criteria == 'Volume':
-                    #PO Frequency by vendor name
-##                    st.sidebar.subheader('Select the category')
-##                    category = st.sidebar.selectbox('Categories', ('Stitched apparel', 'Jewelry', 'Unstitched apparel', 'Home and Art', 'Bags and Footwear'))
-##                    if category == 'Jewelry':
-##                        df_jew = df.loc[df['Category'] == 'Jewelry']
-                    #df_volume1 = df.groupby(['Base Qty'])
                     df_volume = df.groupby(['Base Qty']).count()
                     df_volume_count = pd.DataFrame(df_volume, columns= ['PO Number'])
                     st.markdown(" ")
@@ -135,46 +110,6 @@ if todo == 'Inbound Logistics':
                     st.markdown("Analysis of the volume of POs that were raised")
                     st.line_chart(df_volume_count)
                     st.dataframe(df_volume_count)
-##                    elif category == 'Stitched apparel':
-##                        df_SA = df.loc[df['Category'] == 'Stitched apparel']
-##                        df_SAvname = df_SA.groupby(['Base Qty'])
-##                        df_SA_vname = df_SA.groupby(['Base Qty']).count()
-##                        df_SA_vname_count = pd.DataFrame(df_SA_vname, columns= ['PO Number'])
-##                        st.markdown(" ")
-##                        st.markdown(" ")
-##                        st.markdown("Analysis of the volume of POs that were raised for a particular category")
-##                        st.line_chart(df_SA_vname_count)
-##                        st.dataframe(df_SA_vname_count)
-##                    elif category == 'Unstitched apparel':
-##                        df_USA = df.loc[df['Category'] == 'Unstitched apparel']
-##                        df_USAvname = df_USA.groupby(['Base Qty'])
-##                        df_USA_vname = df_USA.groupby(['Base Qty']).count()
-##                        df_USA_vname_count = pd.DataFrame(df_USA_vname, columns= ['PO Number'])
-##                        st.markdown(" ")
-##                        st.markdown(" ")
-##                        st.markdown("Analysis of the volume of POs that were raised for a particular category")
-##                        st.line_chart(df_USA_vname_count)
-##                        st.dataframe(df_USA_vname_count)
-##                    elif category == 'Home and Art':
-##                        df_HA = df.loc[df['Category'] == 'Home and Art']
-##                        df_HAvname = df_HA.groupby(['Base Qty'])
-##                        df_HA_vname = df_HA.groupby(['Base Qty']).count()
-##                        df_HA_vname_count = pd.DataFrame(df_HA_vname, columns= ['PO Number'])
-##                        st.markdown(" ")
-##                        st.markdown(" ")
-##                        st.markdown("Analysis of the volume of POs that were raised for a particular category")
-##                        st.line_chart(df_HA_vname_count)
-##                        st.dataframe(df_HA_vname_count)
-##                    elif category == 'Bags and Footwear':
-##                        df_BF = df.loc[df['Category'] == 'Bags and Footwear']
-##                        df_BFvname = df_BF.groupby(['Base Qty'])
-##                        df_BF_vname = df_BF.groupby(['Base Qty']).count()
-##                        df_BF_vname_count = pd.DataFrame(df_BF_vname, columns= ['PO Number'])
-##                        st.markdown(" ")
-##                        st.markdown(" ")
-##                        st.markdown("Analysis of the volume of POs that were raised for a particular category")
-##                        st.line_chart(df_BF_vname_count)
-##                        st.dataframe(df_BF_vname_count)
             elif basis == 'Purchase Volume':
                 #PO Frequency by volume
                 st.sidebar.subheader('Select the category')
@@ -229,50 +164,6 @@ if todo == 'Inbound Logistics':
                     st.markdown("Analysis of the volumes ordered in the PO for the category of Bags and Footwear")
                     st.bar_chart(df_BF_vname_count)
                     st.dataframe(df_BF_vname_count)
-##            elif basis == 'Purchase Price':
-##                #PO Frequency by price
-##                st.sidebar.subheader('Select the category')
-##                category = st.sidebar.selectbox('Categories', ('Jewelry','Stitched apparel', 'Unstitched apparel', 'Home and Art', 'Bags and Footwear'))
-##                if category == 'Jewelry':
-##                    df_jew = df.loc[df['Category'] == 'Jewelry']
-##                    df_jewvname = df_jew.groupby(['Vendor Name'])
-##                    df_jew_vname = df_jew.groupby(['Base Qty']).sum()
-##                    df_jew_vname_count = pd.DataFrame(df_jew_vname, columns= ['Base Qty'])
-##                    
-##                    st.line_chart(df_jew_vname_count)
-##                    st.dataframe(df_jew_vname_count)
-##                elif category == 'Stitched apparel':
-##                    df_SA = df.loc[df['Category'] == 'Stitched apparel']
-##                    df_SAvname = df_SA.groupby(['Base Qty'])
-##                    df_SA_vname = df_SA.groupby(['Base Qty']).count()
-##                    df_SA_vname_count = pd.DataFrame(df_SA_vname, columns= ['PO Number'])
-##                    
-##                    st.line_chart(df_SA_vname_count)
-##                    st.dataframe(df_SA_vname_count)
-##                elif category == 'Unstitched apparel':
-##                    df_USA = df.loc[df['Category'] == 'Unstitched apparel']
-##                    df_USAvname = df_USA.groupby(['Base Qty'])
-##                    df_USA_vname = df_USA.groupby(['Base Qty']).count()
-##                    df_USA_vname_count = pd.DataFrame(df_USA_vname, columns= ['PO Number'])
-##                    
-##                    st.line_chart(df_USA_vname_count)
-##                    st.dataframe(df_USA_vname_count)
-##                elif category == 'Home and Art':
-##                    df_HA = df.loc[df['Category'] == 'Home and Art']
-##                    df_HAvname = df_HA.groupby(['Base Qty'])
-##                    df_HA_vname = df_HA.groupby(['Base Qty']).count()
-##                    df_HA_vname_count = pd.DataFrame(df_HA_vname, columns= ['PO Number'])
-##                    
-##                    st.line_chart(df_HA_vname_count)
-##                    st.dataframe(df_HA_vname_count)
-##                elif category == 'Bags and Footwear':
-##                    df_BF = df.loc[df['Category'] == 'Bags and Footwear']
-##                    df_BFvname = df_BF.groupby(['Base Qty'])
-##                    df_BF_vname = df_BF.groupby(['Base Qty']).count()
-##                    df_BF_vname_count = pd.DataFrame(df_BF_vname, columns= ['PO Number'])
-##                    
-##                    st.line_chart(df_BF_vname_count)
-##                    st.dataframe(df_BF_vname_count)
     if inbound == 'Lead Time':
         st.header("Lead Time Analysis")
         st.markdown("Analysis of how the lead times are varying")
@@ -317,13 +208,6 @@ if todo == 'Inbound Logistics':
                     df_jew = df.loc[df['Category'] == 'Jewelry']
                     df_category = (df_jew.groupby(['Vendor Name', 'Lead Time'], as_index=False).mean().groupby('Vendor Name')['Lead Time'].mean())
                     st.bar_chart(df_category)
-                    #df_jewlead = pd.DataFrame(df_jew, columns=['Vendor Name', 'Lead Time', 'PO Number'])
-##                    c = alt.Chart(df_category).mark_circle().encode(
-##                    x='Vendor Name', y='Lead Time', tooltip=['Vendor Name', 'Lead Time', 'PO Number'])
-##                    st.markdown(" ")
-##                    st.markdown(" ")
-##                    st.markdown("Vendor wise analysis of the Lead Time for the category of Jewelry")
-##                    st.altair_chart(c, use_container_width=True)
                     st.dataframe(df_category)
                 elif category == 'Stitched apparel':
                     df_SA = df.loc[df['Category'] == 'Stitched apparel']
@@ -708,13 +592,6 @@ if todo == 'Sales':
         if agree:
             st.dataframe(df_shipdate_count)
             
-##    if uploaded_file:
-##        data = pd.read_excel(uploaded_file)
-##        df = pd.DataFrame(data, columns= ['Channel', 'BUSINESS', 'BRAND', 'Order Qty 1', ' GSV Value ','DIVISION'])
-##        #st.markdown("Say hello to your database")
-##        #st.dataframe(df)
-##        if st.button('Preview Data'):
-##            st.dataframe(df)
         st.cache(persist=True)
         df_GSV = df.loc[df['DIVISION'] == 'Stitched']
         df_GSVsum = df_GSV.groupby(['BRAND'],as_index=False).sum()
@@ -747,10 +624,7 @@ if todo == 'Sales':
         fig = px.bar(df_price_count, x='Price Point', y='Order Qty ')
         fig.update_layout(xaxis_type = 'category')
         st.plotly_chart(fig)
-##        agree = st.checkbox('Show dataframe')
-##        if agree:
-##            st.dataframe(df_price_count)
-
+        
         st.cache(persist=True)
         df_product = df.loc[df['DIVISION'] == 'Stitched']
         df_productcount = df_GSV.groupby(['PRODUCT'],as_index=False).count()
@@ -764,3 +638,26 @@ if todo == 'Sales':
         agree = st.checkbox('Show')
         if agree:
             st.dataframe(df_productcount)
+
+        
+if todo == 'Article sheet':
+    st.cache(persist=True)
+    st.header("Article Sheet")
+    #st.markdown("Analysis of how long it takes for orders to be delivered")
+    uploaded_file = st.file_uploader("Choose a XLSX file", type="xlsx")
+    if uploaded_file:
+        data = pd.read_excel(uploaded_file)
+        df = pd.DataFrame(data, columns= ['SAP Article Code', 'Fabric Attribute CHAR(500)', 'Cogs (INR) Excluding GST', 'Actual End User Price INR'])
+        #pc_mrp = ('Cogs (INR) Excluding GST'/'Actual End User Price INR'*100)
+        df['pc'] = df['Cogs (INR) Excluding GST']/df['Actual End User Price INR']*100
+        st.dataframe(df)
+        st.cache(persist=True)
+
+    upload_file = st.file_uploader("Choose a XLSX file", type="xlsx", key = "<STR>")
+    if upload_file:
+        data = pd.read_excel(upload_file)
+        df = pd.DataFrame(data, columns= ['SAP Style Code', 'Stock closing STR', 'Net sales STR', 'GRN STR', 'Stock closing O',	'Net sales O',	'GRN O', 'Store Sales',	'Store GRN'])
+        df_store = pd.DataFrame(data, columns= ['SAP Style Code', 'Stock closing GK', 'Net sales GK', 'GRN GK', 'Stock closing B', 'Net sales B', 'GRN B', 'Stock closing HSR',	'Net sales HSR', 'GRN HSR', 'Stock closing Ex',	'Net sales Ex',	'GRN Ex'])
+
+        st.dataframe(df)
+        st.dataframe(df_store)
